@@ -21,7 +21,11 @@ class UsersController extends Controller
         
         $user = User::findOrFail($id);
         
-        return view('users.show', ['user' => $user,]);
+        $user->loadRelationshipCounts();
+        
+        $microposts = $user->microposts()->orderBy('created_at', 'desc')->paginate(5);
+        
+        return view('users.show', ['user' => $user, 'microposts' => $microposts,]);
         
     }
 }
