@@ -28,4 +28,30 @@ class UsersController extends Controller
         return view('users.show', ['user' => $user, 'microposts' => $microposts,]);
         
     }
+    
+    public function followings($id) {
+        $user = User::findOrFail($id);
+        
+        $user->loadRelationshipCounts();
+        
+        $followings = $user->followings()->paginate(5);
+        
+        return view('users.followings', [
+            'user' => $user,
+            'users' => $followings,
+        ]);
+    }
+    
+    public function followers($id) {
+        $user = User::findOrFail($id);
+        
+        $user->loadRelationshipCounts();
+        
+        $followers = $user->followers()->paginate(5);
+        
+        return view('users.followers', [
+            'user' => $user,
+            'users' => $followers,
+        ]);
+    }
 }
