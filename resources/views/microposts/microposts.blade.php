@@ -26,6 +26,14 @@
                                 {!! Form::close() !!}
                             @endif
                         </div>
+                        <div>
+                            @if (Auth::id() == $micropost->user_id)
+                                {{-- 編集ボタンフォーム --}}
+                                {!! Form::open(['route' => ['microposts.edit',  $micropost->id], 'method' => 'get']) !!}
+                                    {!! Form::submit('Edit', ['class' => 'btn btn-warning btn-sm']) !!}
+                                {!! Form::close() !!}
+                            @endif
+                        </div>
                     </div>
                 </div>
             </li>

@@ -26,6 +26,7 @@
                                 {!! Form::close() !!}
                             @endif
                         </div>
+                        
                     </div>
                 </div>
             </li>

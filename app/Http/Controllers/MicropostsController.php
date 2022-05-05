@@ -47,5 +47,63 @@ class MicropostsController extends Controller
         
     }
     
+    public function edit($id) {
+        
+        $micropost = \App\Micropost::findOrFail($id);
+        
+        $path = str_replace(url('/'), '', request()->headers->get('referer'));
+        
+        if (\Auth::id() === $micropost->user_id) {
+        
+            return view('microposts.edit', [
+                'micropost' => $micropost,
+                'path' => $path,
+                ]);
+        }
+        
+        
+        
+       
+        
+    }
+    
+    public function update(Request $request, $id)
+    {
+        $micropost = \App\Micropost::findOrFail($id);
+        
+        $micropost->content = $request->content;
+        $micropost->save();
+       
+        $path = $request->path;
+        
+        if($path == '/') {
+            
+            return redirect('/'); 
+            
+        } elseif ($path == '/users/' . \Auth::id()) {
+            
+            return redirect('/users/' . \Auth::id());
+            
+        } else {
+            
+            return redirect('/users/' . \Auth::id() . '/favorites');
+            
+        }
+    }
+    
     
 }
+
+
+
+//ホーム
+//
+
+//タイムライン
+// users/user_id
+
+//favorite
+//users/user_id/favorites
+
+
+
