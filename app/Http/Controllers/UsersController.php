@@ -68,4 +68,21 @@ class UsersController extends Controller
             'microposts' => $favorites,
             ]);
     }
+    
+    public function deletePage($id)
+    {
+        $user = User::findOrFail($id);
+        
+        return view('users.delete', [
+            'user' => $user,
+            ]);
+    }
+    
+    public function deleteAccount($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+        
+        return redirect('/');
+    }
 }
